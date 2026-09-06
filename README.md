@@ -21,6 +21,14 @@ npm ci
 npm run build:pages
 ```
 
-`dist-pages/index.html` と `dist-pages/assets/` をリポジトリ直下へ反映してコミットします。GitHub Pagesは `main` のルートを配信します。Reactのソースは `app/page.tsx`、スタイルは `app/globals.css`、静的版の入口は `pages/` です。Pages版はブラウザから公開APIを直接呼び、認証トークンは使いません。
+`dist-pages/index.html` と `dist-pages/assets/` をリポジトリ直下へ反映してコミットします。GitHub Pagesは `main` のルートを配信します。Reactのソースは `app/page.tsx`、スタイルは `app/globals.css`、静的版の入口は `pages/` です。未接続では公開API、接続後はGitHub公式GraphQL APIの viewer を直接取得します。
 
 既存のSites向けビルドは `npm run build`。公開リポジトリの `.openai/hosting.json` は個別のSite IDを含みません。
+
+## 非公開の貢献（v5）
+
+「非公開の貢献も表示する」から、classic PATの read:user 権限のみで接続します。repo権限は不要です。トークンはメモリにのみ保持し、GitHubの固定APIエンドポイントにだけ送ります。ストレージ、URL、ログ、リポジトリに保存しません。再読込で接続が解除されます。解除時は認証データを消して公開データへ戻します。
+
+認証後はAPIが返す日付範囲とcontributionLevelをそのまま使い、端末の日付で切り取りません。認証失敗で公開データに自動フォールバックしません。公式仕様: https://docs.github.com/en/graphql/reference/users
+
+認証取得処理は模擬応答で検証。実際の個人トークンは開発環境にないため、本人データとウィジェットの一致は接続後の確認が必要です。
