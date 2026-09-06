@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Commit Quest",
-  description: "毎日のGitHubの貢献を、冒険の記録に。",
+  title: "GitHub Contributions",
+  description: "GitHubの芝生をタップして日別の貢献数を確認。",
   other: {
     "codex-preview": "development",
   },

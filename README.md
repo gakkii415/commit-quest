@@ -1,42 +1,26 @@
-# Commit Quest
+# GitHub Contributions
 
-A mobile-first, game-inspired GitHub contribution journal.
+GitHubの芝生を再現した、スマートフォン向けの貢献カレンダーです。
 
-## Features
-- A daily contribution score and goal ring
-- Editable daily goals saved on the device
-- Activity streak, daily record, and seven-day total
-- Selectable daily bars with weekly navigation
-- A 35-day achievement calendar
-- Japanese UI, mobile layout, reduced-motion support
+公開URL: https://gakkii415.github.io/commit-quest/
 
-## Run
+- 直近365日を、日曜始まり・7行の週単位で表示
+- マスをタップすると日付と貢献数を表示
+- スマートフォンではマスを大きくし、横スワイプで過去を表示
+- 最初は最新の日付付近を表示
+- 端末のライト／ダーク表示に追従
 
-Use Node.js 22.13 or newer.
+データ: [GitHub Contributions API](https://github.com/grubersjoe/github-contributions-api)。GitHubプロフィールで公開表示される貢献数と濃淡レベルを使用します。更新に最大約1時間かかる場合があります。日付はGitHubのデータのまま、表示期間の終点は端末の日付で決めます。
+
+## 開発・公開
+
+Node.js 22.13以降。
 
 ```sh
 npm ci
-npm run dev
-npm run build
+npm run build:pages
 ```
 
-## Data and scoring
+`dist-pages/index.html` と `dist-pages/assets/` をリポジトリ直下へ反映してコミットします。GitHub Pagesは `main` のルートを配信します。Reactのソースは `app/page.tsx`、スタイルは `app/globals.css`、静的版の入口は `pages/` です。Pages版はブラウザから公開APIを直接呼び、認証トークンは使いません。
 
-The Sites server, or the browser on GitHub Pages, reads public profile contribution counts from [GitHub Contributions API](https://github.com/grubersjoe/github-contributions-api). No GitHub token is required. Upstream results can be cached for one hour. A contribution is not equivalent to a commit or a measure of time, quality, or productivity.
-
-The app fetches the current and previous calendar years. The best-day record and streak are limited to this available period. Date labels remain GitHub's dates; the device determines which date is today. A zero today does not break a streak that ended yesterday. Goals and selected account are stored locally, and changing the goal also recalculates the achievement calendar. Daily tiers are STARTED at 1, GREAT at 10, ON FIRE at 20, and LEGEND at 50 contributions.
-
-## Source layout
-
-- `app/page.tsx`: daily game interface
-- `app/globals.css`: visual theme and responsive layout
-- `lib/activity.ts`: dates, streaks, and daily tiers
-- `app/api/contributions/route.ts`: validated, bounded upstream request
-
-This project uses the bundled Vinext / React / Cloudflare Workers starter. The `.openai/hosting.json` file deliberately omits the private hosted Site identity. Register your own Site when independently deploying a copy. No credentials belong in this repository.
-
-## GitHub Pages
-
-Public app: https://gakkii415.github.io/commit-quest/
-
-`npm run build:pages` builds the static app into `dist-pages/`. Publish the generated `index.html` and `assets/` at the repository root, alongside `.nojekyll`, then commit them. GitHub Pages serves the root of `main`. Rebuild and commit the generated files after changing the UI. The browser requests the public contributions API directly; no server or token is needed. The React UI and daily calculations are shared with the Sites build.
+既存のSites向けビルドは `npm run build`。公開リポジトリの `.openai/hosting.json` は個別のSite IDを含みません。

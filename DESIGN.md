@@ -361,3 +361,9 @@ Yesの場合、装飾を追加する前に、構成、情報階層、コンテ�
 - Typography / color / spacing / shape direction:
 - Motion / responsive direction:
 - Durable design decisions:
+
+## Current direction (v4)
+
+User explicitly requests only GitHub's contribution grass and tap-to-view counts. Replace the prior game dashboard. Use seven weekday rows, chronological week columns, native green activity levels, quiet borders and system typography. Mobile uses 24px cells and horizontal scrolling; the selected date and count remain directly below the grid. Desktop uses compact cells. No quests, goals, streaks, badges or decorative panels.
+
+Reference: GitHub contribution calendar, https://docs.github.com/en/account-and-profile/concepts/contributions-on-your-profile . Documentation confirms a day-based contribution grid. Adopt the 7-row arrangement, green intensity scale and month/weekday labels. Touch selection displays a persistent readout instead of relying on hover. Alternatives considered: shrinking the entire year to fit mobile vs. preserving tappable squares and horizontal scrolling; selected the latter. No browser screenshot QA was performed in this update.
